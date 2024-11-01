@@ -24,10 +24,6 @@ const endAuthenticatedSession = req => {
 
 
 const register = async (username, email, password) => {
-
-  // TODO: implement registration (
-  // * check if username and password are both greater than 8
-
     if ((username.length < 8) || (password.length < 8)){
       throw ({message: 'USERNAME PASSWORD TOO SHORT'});
     }
@@ -45,14 +41,6 @@ const register = async (username, email, password) => {
     return newUser.save()
     .then((savedUser)=>{return savedUser;});
 };
-
-  //   * if not, throw { message: 'USERNAME PASSWORD TOO SHORT' }
-  // * check if user with same username already exists
-  //   * if not, throw { message: 'USERNAME ALREADY EXISTS' }
-  // * salt and hash using bcrypt's sync functions
-  //   * https://www.npmjs.com/package/bcryptjs#usage---sync
-  // * if registration is successfull, return the newly created user
-  // return user;
 
 const login = async (username, password) => {
 
@@ -72,13 +60,6 @@ const login = async (username, password) => {
         return foundUser;
       }
     }
-
-  // * if username isn't found, throw { message: "USER NOT FOUND" }
-  // * use bcrypt's sync functions to check if passwords match
-  // * https://www.npmjs.com/package/bcryptjs#usage---sync
-  // * if passwords mismatch, throw{ message: "PASSWORDS DO NOT MATCH" }
-  // * however, if passwords match, return found user
-  // return user;
 };
 
 export {
