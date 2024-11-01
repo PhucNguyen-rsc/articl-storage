@@ -12,8 +12,11 @@ const UserSchema = new mongoose.Schema({
 const ArticleSchema = new mongoose.Schema({
   // TODO: finish this ArticleSchema so that it:
   // * contains a title, url, and descripition
+  title: {type: String, required: true},
+  url: {type: String, required: true},
+  description: {type: String, required: true},
   // * contains a user property that references a User document
-
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 
   // end TODO
 }, {timestamps: true});

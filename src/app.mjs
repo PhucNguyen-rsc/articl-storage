@@ -12,6 +12,7 @@ import * as auth from './auth.mjs';
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 const app = express();
+const articleRouter = express.Router();
 
 app.set('view engine', 'hbs');
 
@@ -76,6 +77,13 @@ app.post('/article/add', async (req, res) => {
   }
 });
 
+articleRouter.get('/:var1', async (req,res)=>{
+  const foundArticle = await Article.findOne({slug: req.params.var1}).populate('user').exec();
+  if (foundArticle){
+    res.render('article-detail', {article: foundArticle});
+  }
+})
+
 // TODO: respond to GET requests for a specific articl
 // * path is /article/name-of-article-as-slug
 //   * where name-of-article-as-slug will vary
@@ -121,9 +129,11 @@ app.post('/login', async (req, res) => {
     await auth.startAuthenticatedSession(req, user);
     res.redirect('/'); 
   } catch(err) {
-    console.log(err)
+    console.log("Error message:" , err);
     res.render('login', {message: loginMessages[err.message] ?? 'Login unsuccessful'}); 
   }
 });
+
+app.use('/article', articleRouter);
 
 app.listen(process.env.PORT ?? 3000);
