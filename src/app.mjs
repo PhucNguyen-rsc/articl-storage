@@ -82,7 +82,7 @@ articleRouter.get('/:var1', async (req,res)=>{
   if (foundArticle){
     res.render('article-detail', {article: foundArticle});
   }
-})
+});
 
 // TODO: respond to GET requests for a specific articl
 // * path is /article/name-of-article-as-slug

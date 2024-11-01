@@ -27,28 +27,23 @@ const register = async (username, email, password) => {
 
   // TODO: implement registration (
   // * check if username and password are both greater than 8
-  try{
+
     if ((username.length < 8) || (password.length < 8)){
-      throw ({message: 'USERNAME PASSWORD TOO SHORT'})
+      throw ({message: 'USERNAME PASSWORD TOO SHORT'});
     }
-    const foundUser = await User.findOne({username: username})
+    const foundUser = await User.findOne({username: username});
     if (foundUser){
-      throw ({ message: 'USERNAME ALREADY EXISTS' })
+      throw ({ message: 'USERNAME ALREADY EXISTS' });
     }
-    var salt = bcrypt.genSaltSync(10);
-    var hash = bcrypt.hashSync(password, salt);
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
     const newUser = new User({
       username: username,
       password: hash,
       email: email,
     });
     return newUser.save()
-    .then((savedUser)=>{return savedUser;})
-    .catch((error)=>{console.log("ERROR!, ", error)})
-  }
-  catch(error){
-    throw error;
-  }
+    .then((savedUser)=>{return savedUser;});
 };
 
   //   * if not, throw { message: 'USERNAME PASSWORD TOO SHORT' }
@@ -63,13 +58,12 @@ const login = async (username, password) => {
 
   // TODO: implement login
   // * find a user with a matching username
-  try{
-    const foundUser = await User.findOne({username: username})
+    const foundUser = await User.findOne({username: username});
     if (!foundUser){
       throw ({ message: "USER NOT FOUND" });
     }
     else{
-      let hash = foundUser.password;
+      const hash = foundUser.password;
       const isMatch = await bcrypt.compare(password, hash);
       if (!isMatch){
         throw ({ message: "PASSWORDS DO NOT MATCH" });
@@ -78,10 +72,6 @@ const login = async (username, password) => {
         return foundUser;
       }
     }
-  }
-  catch(error){
-    throw error;
-  }
 
   // * if username isn't found, throw { message: "USER NOT FOUND" }
   // * use bcrypt's sync functions to check if passwords match
@@ -91,7 +81,7 @@ const login = async (username, password) => {
   // return user;
 };
 
-export  {
+export {
   startAuthenticatedSession,
   endAuthenticatedSession,
   register,
